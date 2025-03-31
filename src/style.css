@@ -354,11 +354,15 @@ button:focus {
 }
 
 .myAvtar img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 20px;
+  width: 320px;    /* Increased size */
+  height: 320px;   /* Increased size */
+  object-fit: cover;
+  border-radius: 50%; /* Circular shape */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+/* Optional: white border for clarity */
+  background-color: transparent; /* Ensures the background is transparent */
 }
+
 
 /* Social Section */
 .home-about-social {
