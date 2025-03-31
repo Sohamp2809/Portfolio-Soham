@@ -1,40 +1,26 @@
 import React, { useRef, useEffect, useState } from "react";
+import Home2 from "./Home2";
 
 function Home() {
   const canvasRef = useRef(null);
 
-  // State for window dimensions so our canvas can resize
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
 
-  // We'll track the mouse position with a ref
   const mouse = useRef({ x: null, y: null });
+  const dotsRef = useRef([]);
 
-  // Constants controlling star behavior
-  const STAR_COUNT = 300;         // Number of stars
-  const MOUSE_RADIUS = 120;      // Cursor detection radius
-  const CONNECT_DISTANCE = 100;  // Max distance between stars to draw a line
-  const STAR_SIZE_MIN = 1;       // Min star radius
-  const STAR_SIZE_MAX = 2.5;     // Max star radius
-
-  // We'll store the star objects in a ref
-  // Each star = { x, y, size }
-  const starsRef = useRef([]);
-
+  // Initialize canvas and start drawing dots
   useEffect(() => {
-    // On mount, set up star data
-    initStars();
-    // Animate each frame
-    requestAnimationFrame(animate);
-
-    // Cleanup if needed on unmount
-    return () => {};
+    initCanvas();
+    const drawInterval = setInterval(createDots, 1000 / 30);
+    return () => clearInterval(drawInterval);
     // eslint-disable-next-line
   }, []);
 
-  // Re-initialize stars when window size changes
+  // Listen for window resize
   useEffect(() => {
     const handleResize = () => {
       setDimensions({
@@ -46,152 +32,190 @@ function Home() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Re-initialize canvas on dimension changes
   useEffect(() => {
-    initStars();
+    initCanvas();
     // eslint-disable-next-line
   }, [dimensions]);
 
-  // Track mouse position
+  // Track mouse movement and update first dot to follow the cursor
   useEffect(() => {
     const handleMouseMove = (e) => {
-      mouse.current.x = e.clientX;
-      mouse.current.y = e.clientY;
+      mouse.current.x = e.pageX;
+      mouse.current.y = e.pageY;
+      if (dotsRef.current.length > 0) {
+        dotsRef.current[0].x = e.pageX;
+        dotsRef.current[0].y = e.pageY;
+      }
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Create the star objects
-  function initStars() {
-    const { width, height } = dimensions;
-    starsRef.current = [];
+  // Use white for dots and constant white with 40% opacity for lines
+  const colorDot = ["rgb(255, 255, 255)"];
+  let lineColor = "rgba(42, 98, 150, 0.4)";
 
-    for (let i = 0; i < STAR_COUNT; i++) {
-      starsRef.current.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * (STAR_SIZE_MAX - STAR_SIZE_MIN) + STAR_SIZE_MIN,
-      });
+  function getDotConfig(width) {
+    if (width > 1600) {
+      return { nb: 600, distance: 70, d_radius: 300 };
+    } else if (width > 1300) {
+      return { nb: 575, distance: 60, d_radius: 280 };
+    } else if (width > 1100) {
+      return { nb: 500, distance: 55, d_radius: 250 };
+    } else if (width > 800) {
+      return { nb: 300, distance: 0, d_radius: 0 };
+    } else if (width > 600) {
+      return { nb: 200, distance: 0, d_radius: 0 };
+    } else {
+      return { nb: 100, distance: 0, d_radius: 0 };
     }
   }
 
-  // Animation loop
-  function animate() {
+  function initCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    canvas.width = document.body.scrollWidth;
+    canvas.height = window.innerHeight;
+
     const ctx = canvas.getContext("2d");
-    const { width, height } = dimensions;
+    ctx.lineWidth = 0.3;
+    ctx.strokeStyle = lineColor;
 
-    // Clear the canvas
-    ctx.clearRect(0, 0, width, height);
-
-    // Draw each star as a small circle
-    const stars = starsRef.current;
-    for (let i = 0; i < STAR_COUNT; i++) {
-      let s = stars[i];
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.size, 0, 2 * Math.PI);
-      ctx.fillStyle = "#fff";
-      ctx.fill();
+    const config = getDotConfig(canvas.width);
+    dotsRef.current = [];
+    for (let i = 0; i < config.nb; i++) {
+      dotsRef.current.push(createDot(canvas, config));
     }
 
-    // If the mouse isn't on screen, skip connecting lines
-    if (mouse.current.x === null || mouse.current.y === null) {
-      requestAnimationFrame(animate);
-      return;
+    // Set first dot's color to dark blue (e.g. mouse-following dot)
+    if (dotsRef.current.length > 0) {
+      dotsRef.current[0].radius = 1.5;
+      dotsRef.current[0].colour = "rgb(10, 10, 70)";
     }
+  }
 
-    // Gather all stars that are near the mouse
-    // so we only connect stars that are also near the mouse
-    const nearStars = [];
-    for (let i = 0; i < STAR_COUNT; i++) {
-      let dx = stars[i].x - mouse.current.x;
-      let dy = stars[i].y - mouse.current.y;
-      let dist = Math.sqrt(dx * dx + dy * dy);
+  function createDot(canvas, config) {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    return {
+      x,
+      y,
+      vx: -0.5 + Math.random(),
+      vy: -0.5 + Math.random(),
+      radius: Math.random() * 1.5,
+      colour: colorDot[Math.floor(Math.random() * colorDot.length)],
+      config,
+    };
+  }
 
-      if (dist < MOUSE_RADIUS) {
-        nearStars.push(stars[i]);
+  function createDots() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const dotsArray = dotsRef.current;
+    if (dotsArray.length === 0) return;
+    for (let i = 0; i < dotsArray.length; i++) {
+      const d = dotsArray[i];
+      drawDot(ctx, d);
+      if (i !== 0) {
+        animateDot(d, canvas);
       }
     }
+    line(ctx, dotsArray[0].config);
+  }
 
-    // Now connect those near-stars if they are also close to each other
-    for (let i = 0; i < nearStars.length; i++) {
-      for (let j = i + 1; j < nearStars.length; j++) {
-        let s1 = nearStars[i];
-        let s2 = nearStars[j];
-        let dx = s1.x - s2.x;
-        let dy = s1.y - s2.y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
+  function drawDot(ctx, dot) {
+    const dotDistance = Math.hypot(
+      dot.x - (mouse.current.x || 0),
+      dot.y - (mouse.current.y || 0)
+    );
+    const distanceRatio = dotDistance / (canvasRef.current.width / 1.7);
+    const alpha = Math.max(0.6, 1 - distanceRatio);
+    // Convert the "rgb(255, 255, 255)" string to rgba using the calculated alpha
+    const colorFaded = dot.colour.replace("rgb(", "rgba(").replace(")", `,${alpha})`);
+    ctx.beginPath();
+    ctx.arc(dot.x, dot.y, dot.radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = colorFaded;
+    ctx.fill();
+  }
 
-        if (dist < CONNECT_DISTANCE) {
-          // fade line by distance if you like
-          let alpha = 1 - dist / CONNECT_DISTANCE;
-          ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(s1.x, s1.y);
-          ctx.lineTo(s2.x, s2.y);
-          ctx.stroke();
+  function animateDot(dot, canvas) {
+    if (dot.y < 0 || dot.y > canvas.height) {
+      dot.vy = -dot.vy;
+    } else if (dot.x < 0 || dot.x > canvas.width) {
+      dot.vx = -dot.vx;
+    }
+    dot.x += dot.vx;
+    dot.y += dot.vy;
+  }
+
+  function line(ctx, config) {
+    const dotsArray = dotsRef.current;
+    for (let i = 0; i < config.nb; i++) {
+      for (let j = 0; j < config.nb; j++) {
+        const i_dot = dotsArray[i];
+        const j_dot = dotsArray[j];
+        if (
+          i_dot.x - j_dot.x < config.distance &&
+          i_dot.y - j_dot.y < config.distance &&
+          i_dot.x - j_dot.x > -config.distance &&
+          i_dot.y - j_dot.y > -config.distance
+        ) {
+          if (
+            i_dot.x - (mouse.current.x || 0) < config.d_radius &&
+            i_dot.y - (mouse.current.y || 0) < config.d_radius &&
+            i_dot.x - (mouse.current.x || 0) > -config.d_radius &&
+            i_dot.y - (mouse.current.y || 0) > -config.d_radius
+          ) {
+            ctx.beginPath();
+            ctx.moveTo(i_dot.x, i_dot.y);
+            ctx.lineTo(j_dot.x, j_dot.y);
+            // Use the constant lineColor
+            ctx.strokeStyle = lineColor;
+            ctx.stroke();
+            ctx.closePath();
+          }
         }
       }
     }
+  }
 
-    requestAnimationFrame(animate);
+  // Scroll smoothly to the Home2 section (with id "home2-section")
+  function handleViewMyWork() {
+    const home2Section = document.getElementById("home2-section");
+    if (home2Section) {
+      home2Section.scrollIntoView({ behavior: "smooth" });
+    }
   }
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
-      {/* The full-screen Canvas */}
-      <canvas
-        ref={canvasRef}
-        width={dimensions.width}
-        height={dimensions.height}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          background: "#000",  // black background
-          display: "block",
-          zIndex: 0,
-        }}
-      />
-
-      {/* Hero text above the canvas */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          color: "#fff",
-          textAlign: "center",
-          top: "30%",
-        }}
-      >
-        <h1>Hello, I'm Soham Patel.</h1>
-        <p>I'm a full stack web developer.</p>
-        <button
-          style={{
-            backgroundColor: "transparent",
-            border: "2px solid #f00",
-            color: "#f00",
-            padding: "0.8rem 1.5rem",
-            fontSize: "1rem",
-            cursor: "pointer",
-            transition: "background 0.3s ease",
-          }}
-          onMouseOver={(e) => {
-            e.target.style.backgroundColor = "#f00";
-            e.target.style.color = "#fff";
-          }}
-          onMouseOut={(e) => {
-            e.target.style.backgroundColor = "transparent";
-            e.target.style.color = "#f00";
-          }}
-        >
-          View my work ↓
-        </button>
+    <section>
+      <div className="home-section">
+        <canvas ref={canvasRef} className="home-canvas" />
+        <div className="hero-text">
+          <h1>Hello, I'm Soham.</h1>
+          <p>I'm A Full Stack Web Developer.</p>
+          <button
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#000";
+              e.target.style.color = "#fff";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "#fff";
+              e.target.style.color = "#000";
+            }}
+            onClick={handleViewMyWork}
+          >
+            View my work ↓
+          </button>
+        </div>
       </div>
-    </div>
+      {/* Home2 is rendered immediately after, with an id for scrolling */}
+      <Home2 />
+    </section>
   );
 }
 

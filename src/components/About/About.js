@@ -5,7 +5,6 @@ import Aboutcard from "./AboutCard";
 import Techstack from "./Techstack";
 import Toolstack from "./Toolstack";
 import laptopImg from "../../Assets/about.png";
-import Message from "./Message"; // <-- Import your Message component
 
 function About() {
   // For slide-in animation (optional)
@@ -91,10 +90,7 @@ function About() {
         <Toolstack />
 
         {/* Contact Form Section */}
-        <h1 className="project-heading">
-          <strong className="blue">Message To Soham</strong>
-        </h1>
-        <Message />
+       
       </Container>
     </Container>
   );

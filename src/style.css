@@ -245,148 +245,154 @@ button:focus {
   padding-top: 80px !important;
 }
 
+/* Home section container */
 .home-section {
   position: relative;
-  z-index: -1;
-  background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
-  background-position: top center;
+  width: 100%;
+  height: 100vh;
+  /* Example: gradient plus a subtle star background image */
+  background-image: var(--image-gradient);
+  background-position: center top;
   background-repeat: no-repeat;
-  padding-bottom: 30px !important;
-  padding-top: 30px !important;
+  background-size: cover;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-.home-content {
-  padding: 9rem 0 2rem !important;
-  color: #333;
-  text-align: left;
-}
-
-.heading {
-  font-size: 2.4em !important;
-  padding-left: 50px !important;
-}
-
-.heading-name {
-  font-size: 2.5em !important;
-  padding-left: 45px !important;
-}
-
-.main-name {
-  color: #0077cc;
-}
-
-.Typewriter__wrapper {
-  font-size: 2.2em !important;
-  color: #0077cc !important;
-  font-weight: 600 !important;
-}
-.Typewriter__cursor {
-  font-size: 2.4em !important;
-  color: #00509e !important;
-}
-
-@media (max-width: 767px) {
-  .Typewriter__wrapper {
-    font-size: 1.4em !important;
-    font-weight: 500 !important;
-    position: absolute !important;
-  }
-  .Typewriter__cursor {
-    display: none !important;
-  }
-}
-
-.myAvtar {
-  justify-content: center !important;
-  padding-top: 9em !important;
-}
-
-@media (max-width: 767px) {
-  .myAvtar {
-    padding-top: 2em !important;
-    padding-bottom: 2em !important;
-  }
-}
-
-.home-about-section {
-  position: relative;
-  padding-bottom: 70px !important;
-  padding-top: 70px !important;
-}
-
-.home-about-description {
-  color: #333 !important;
-  padding-top: 100px !important;
-  padding-bottom: 20px !important;
-  text-align: center;
-}
-
-.home-about-body {
-  padding-top: 50px;
-  font-size: 1.2em !important;
-  text-align: left;
-}
-
-.home-about-social {
-  text-align: center !important;
-  padding-top: 25px;
-  color: #333 !important;
-}
-
-.home-about-social-links {
-  justify-content: center !important;
-  padding-top: 15px !important;
-  display: inline-block !important;
-  position: relative !important;
-  padding-inline-start: 0 !important;
-}
-
-.home-social-icons {
-  position: relative !important;
-  display: inline-block !important;
-  width: 40px !important;
-  height: 40px !important;
-  text-align: center !important;
-  font-size: 1.2em !important;
-  line-height: 2em !important;
-  background: rgba(255, 255, 255, 0.972) !important;
-  border-radius: 50% !important;
-  transition: 0.5s !important;
-}
-
-.home-social-icons::before {
-  content: "";
+/* The canvas behind everything */
+.home-canvas {
   position: absolute;
   top: 0;
   left: 0;
+  display: block;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  background: #a0d8ef;
-  transition: 0.5s;
-  transform: scale(0.9);
-  z-index: -1;
+  background-color: transparent; /* So it doesn't override your theme */
+  z-index: 0;
 }
 
-.home-social-icons:hover::before {
+/* Hero text above the canvas */
+.hero-text {
+  position: relative;
+  z-index: 1;
+  color: #333; /* Dark text for better contrast on a light background */
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero-text h1 {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.hero-text p {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-text button {
+  background-color: #fff;       /* White background */
+  border: 2px solid #000;       /* Black border */
+  color: #000;                  
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;               
+  margin: 0 auto;
+  text-align: center;               
+}
+
+.hero-text button:hover {
+  background-color: #000;       
+  color: #fff; 
+  display: inline-block; 
+  margin: 0 auto;      
+}
+
+
+.home-about-section {
+  background: linear-gradient(
+    to bottom left,
+    #a7c8d2,
+    #e3f4f6
+  );
+  padding: 60px 0;
+  color: #1a1a1a;
+}
+
+
+
+
+.home-about-description h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.home-about-description p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #222222;
+}
+
+.home-about-description .purple {
+  color: #3474e0;
+  font-weight: 600;
+}
+
+.myAvtar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.myAvtar img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Social Section */
+.home-about-social {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.home-about-social h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.home-about-social p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.home-about-social-links {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.home-about-social-links .social-icons a {
+  font-size: 1.9rem;
+  color: #1a1a1a;
+  transition: 0.3s;
+}
+
+.home-about-social-links .social-icons a:hover {
+  color: #3474e0;
   transform: scale(1.1);
-  box-shadow: 0 0 15px #0077cc;
-}
-
-.home-social-icons:hover {
-  color: #00509e;
-  box-shadow: 0 0 5px #00509e;
-  text-shadow: 0 0 2px #00509e;
-}
-
-.social-icons {
-  display: inline-block !important;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-.icon-colour {
-  color: #0077cc !important;
 }
 
 /* --------- */
@@ -424,14 +430,23 @@ button:focus {
   margin-bottom: 0.5em !important;
 }
 .footer-icons {
-  margin-top: 0.5em !important;
-  margin-bottom: 0.5em !important;
-  padding: 0 !important;
+  list-style: none;       /* Removes the dots */
+  padding: 0;             /* Optional: removes left padding */
+  display: flex;          /* Aligns icons in a row */
+  justify-content: center;
+  gap: 20px;              /* Space between icons */
 }
 
-.blockquote-footer {
-  color: #555 !important;
+.footer-icons li a {
+  font-size: 1.5rem;
+  color: #1a1a1a;         /* Or your desired theme color */
+  transition: color 0.3s ease;
 }
+
+.footer-icons li a:hover {
+  color: #007bff;         /* Optional hover color */
+}
+
 
 /* --------- */
 /* Projects */
