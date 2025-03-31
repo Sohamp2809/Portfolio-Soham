@@ -24,7 +24,7 @@ function Home2() {
               <b className="purple">Python</b>,{" "}
               <b className="purple">JavaScript</b>, and{" "}
               <b className="purple">Java</b> to building robust web solutions and exploring the fascinating world of{" "}
-              <b className="purple">Blockchain</b> 🚀.
+              <b className="purple">AI</b> 🚀.
               <br />
               <br />
               {showMore && (
