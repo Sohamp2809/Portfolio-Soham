@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { AiOutlineMail } from "react-icons/ai";
 
 function AboutPage() {
   return (
@@ -42,17 +41,7 @@ function AboutPage() {
               marginTop: "1rem",
             }}
           >
-            
-            <li style={{ margin: "0 10px" }}>
-              <a
-                href="mailto:psoham028@gmail.com?subject=Hello%20Soham&body=Hi%20Soham!"
-                target="_blank"
-                rel="noreferrer"
-                className="icon-colour home-social-icons"
-              >
-                <AiOutlineMail size={30} />
-              </a>
-            </li>
+            {/* Mail button has been removed */}
           </ul>
         </Col>
       </Row>

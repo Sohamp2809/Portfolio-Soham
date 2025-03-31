@@ -197,7 +197,7 @@ function Home() {
         <canvas ref={canvasRef} className="home-canvas" />
         <div className="hero-text">
           <h1>Hello, I'm Soham.</h1>
-          <p>I'm A Full Stack Web Developer.</p>
+          <p>I'm A Full Stack Developer.</p>
           <button
             onMouseOver={(e) => {
               e.target.style.backgroundColor = "#000";
