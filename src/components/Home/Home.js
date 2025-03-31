@@ -209,7 +209,7 @@ function Home() {
             }}
             onClick={handleViewMyWork}
           >
-            View my work ↓
+            Introduction ↓
           </button>
         </div>
       </div>
