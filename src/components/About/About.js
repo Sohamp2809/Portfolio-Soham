@@ -22,13 +22,15 @@ function About() {
       { threshold: 0.1 }
     );
 
-    if (imageRef.current) {
-      observer.observe(imageRef.current);
+    // Copy the current ref value to a local variable
+    const currentImage = imageRef.current;
+    if (currentImage) {
+      observer.observe(currentImage);
     }
 
     return () => {
-      if (imageRef.current) {
-        observer.unobserve(imageRef.current);
+      if (currentImage) {
+        observer.unobserve(currentImage);
       }
     };
   }, []);
@@ -42,40 +44,42 @@ function About() {
         <Row style={{ justifyContent: "center", padding: "10px" }}>
           <Col
             md={7}
-            style={{ justifyContent: "center", paddingTop: "30px", paddingBottom: "50px" }}
+            style={{
+              justifyContent: "center",
+              paddingTop: "30px",
+              paddingBottom: "50px",
+            }}
           >
             <h1 style={{ fontSize: "2.1em", paddingBottom: "20px" }}>
-              Know Who <strong >I Am</strong>
+              Know Who <strong>I Am</strong>
             </h1>
             <Aboutcard />
           </Col>
 
           {/* Slide-in Image Section */}
-          {/* Image Column */}
           <Col
-          md={5}
-          ref={imageRef}
-          className="about-img slide-in-right"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            paddingTop: "30px",
-            paddingBottom: "100px",
-            marginTop: "-20px",
-          }}
-          >
-          <img
-            src={laptopImg}
-            alt="about"
-            className="img-fluid"
+            md={5}
+            ref={imageRef}
+            className="about-img slide-in-right"
             style={{
-            maxWidth: "80%",     /* Adjust to control image size */
-            borderRadius: "8px",
-             /* Rounded corners */
-          }}
-        />
-      </Col>
-      </Row>
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "30px",
+              paddingBottom: "100px",
+              marginTop: "-20px",
+            }}
+          >
+            <img
+              src={laptopImg}
+              alt="about"
+              className="img-fluid"
+              style={{
+                maxWidth: "80%", // Adjust to control image size
+                borderRadius: "8px", // Rounded corners
+              }}
+            />
+          </Col>
+        </Row>
 
         {/* Skillset Section */}
         <h1 className="project-heading">
@@ -90,7 +94,6 @@ function About() {
         <Toolstack />
 
         {/* Contact Form Section */}
-       
       </Container>
     </Container>
   );
