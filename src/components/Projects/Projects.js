@@ -89,6 +89,14 @@ function Projects() {
               ghLink="https://github.com/Sohamp2809/Day-time-scheduling"
             />
           </div>
+          <div>
+            <ProjectCards
+              imgPath={Task}
+              title="Hospital-Management-System"
+              description="Empowering efficient healthcare with a user-friendly, all-in-one management solution."
+              ghLink="https://github.com/Sohamp2809/Hospital-Management-System"
+            />
+          </div>
         </Slider>
 
         <h1 className="htypewritereading-" style={{ marginTop: "50px" }}>

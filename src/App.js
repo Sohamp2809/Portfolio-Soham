@@ -13,19 +13,62 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+
 import ScrollToTop from "./components/ScrollToTop";
 import "./style.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { db } from "./firebase";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  collection,
+  addDoc,
+} from "firebase/firestore";
+
+const trackVisitors = async () => {
+  try {
+    // Fetch the visitor's IP address
+    const response = await fetch("https://api64.ipify.org?format=json");
+    const data = await response.json();
+    const userIP = data.ip;
+
+    // Reference to views count document
+    const viewsRef = doc(db, "siteStats", "views");
+    const viewsSnap = await getDoc(viewsRef);
+
+    if (viewsSnap.exists()) {
+      await updateDoc(viewsRef, { count: viewsSnap.data().count + 1 });
+    } else {
+      await setDoc(viewsRef, { count: 1 });
+    }
+
+    // Store the visitor's IP address in a new collection
+    const ipCollectionRef = collection(db, "visitorIPs");
+    await addDoc(ipCollectionRef, {
+      ip: userIP,
+      timestamp: new Date(),
+    });
+
+    console.log("Visitor IP logged:", userIP);
+  } catch (error) {
+    console.error("Error tracking visitor:", error);
+  }
+};
+
 
 function App() {
   const [load, upadateLoad] = useState(true);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       upadateLoad(false);
     }, 1200);
     return () => clearTimeout(timer);
+  }, []);
+  useEffect(() => {
+    trackVisitors();
   }, []);
 
   return (
