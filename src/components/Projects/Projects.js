@@ -78,7 +78,7 @@ function Projects() {
             <ProjectCards
               imgPath={Com}
               title="My Ecommerce Store"
-              description="Interactive app for daily scheduling and task management."
+              description="User-friendly scalable Node.js e-commerce platform."
               ghLink="https://github.com/Sohamp2809/My-Ecommerce-Store-"
             />
           </div>
@@ -94,7 +94,7 @@ function Projects() {
             <ProjectCards
               imgPath={Hospital}
               title="Hospital-Management-System"
-              description="Empowering efficient healthcare with a user-friendly, all-in-one management solution."
+              description="Simplifying care with a single, intuitive management platform."
               ghLink="https://github.com/Sohamp2809/Hospital-Management-System"
             />
           </div>
