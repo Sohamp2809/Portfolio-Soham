@@ -197,7 +197,17 @@ function Home() {
         <canvas ref={canvasRef} className="home-canvas" />
         <div className="hero-text">
           <h1>Hello, I'm Soham.</h1>
-          <p>I'm A Full Stack Developer.</p>
+          <p
+          style={{
+          fontStyle: "italic",
+          textAlign: "center",
+          color: "#2c3e50",
+          fontSize: "1.75rem",
+          margin: "2rem 0"
+          }}
+          >
+          “Empowering digital transformation with scalable front‑ends, resilient back‑ends, and AI‑driven insights.”
+          </p>
           <button
             onMouseOver={(e) => {
               e.target.style.backgroundColor = "#000";

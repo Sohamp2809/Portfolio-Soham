@@ -13,6 +13,7 @@ import Com from "../../Assets/Projects/Com.png";
 import Task from "../../Assets/Projects/Task.png";
 import Python from "../../Assets/Projects/Python.png";
 import Tabluea from "../../Assets/Projects/Tabluea.png"
+import Hospital from "../../Assets/Projects/Hospital.PNG"
 
 function Projects() {
   // Example slider settings showing 2 slides at once
@@ -91,7 +92,7 @@ function Projects() {
           </div>
           <div>
             <ProjectCards
-              imgPath={Task}
+              imgPath={Hospital}
               title="Hospital-Management-System"
               description="Empowering efficient healthcare with a user-friendly, all-in-one management solution."
               ghLink="https://github.com/Sohamp2809/Hospital-Management-System"

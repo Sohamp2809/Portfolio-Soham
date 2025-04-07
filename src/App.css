@@ -27,6 +27,12 @@
 .App-link {
   color: #61dafb;
 }
+/* App.css */
+.tsparticles-canvas-el,
+.react-particles-js-canvas-el {
+  pointer-events: none !important;
+}
+
 
 @keyframes App-logo-spin {
   from {

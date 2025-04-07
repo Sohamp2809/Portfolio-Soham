@@ -88,6 +88,7 @@ function App() {
           <Route path="/home2" element={<Home2 />} />
 
           {/* Fallback for unknown routes */}
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />

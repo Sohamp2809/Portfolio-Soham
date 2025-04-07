@@ -5,6 +5,7 @@ import Aboutcard from "./AboutCard";
 import Techstack from "./Techstack";
 import Toolstack from "./Toolstack";
 import laptopImg from "../../Assets/about.png";
+import SocialLinks from "./SocialLinks";
 
 function About() {
   // For slide-in animation (optional)
@@ -22,7 +23,6 @@ function About() {
       { threshold: 0.1 }
     );
 
-    // Copy the current ref value to a local variable
     const currentImage = imageRef.current;
     if (currentImage) {
       observer.observe(currentImage);
@@ -74,8 +74,8 @@ function About() {
               alt="about"
               className="img-fluid"
               style={{
-                maxWidth: "80%", // Adjust to control image size
-                borderRadius: "8px", // Rounded corners
+                maxWidth: "80%",
+                borderRadius: "8px",
               }}
             />
           </Col>
@@ -92,9 +92,10 @@ function About() {
           <strong className="blue">Tools</strong> I use
         </h1>
         <Toolstack />
-
-        {/* Contact Form Section */}
       </Container>
+
+      {/* Social Links Section */}
+      <SocialLinks />
     </Container>
   );
 }

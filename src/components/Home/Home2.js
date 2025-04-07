@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { AiFillGithub, AiOutlineMail } from "react-icons/ai";
-import { FaLinkedinIn } from "react-icons/fa";
+
 import myImg from "../../Assets/Photo.png"; // Adjust the path as needed
+import Home3 from "./Home3"; 
 
 function Home2() {
   const [showMore, setShowMore] = useState(false);
@@ -12,30 +12,34 @@ function Home2() {
   };
 
   return (
-    <Container fluid className="home-about-section" id="home2-section">
+    <Container
+  fluid
+  className="home-about-section"
+  id="home2-section"
+>
       <Container>
         <Row>
           <Col md={8} className="home-about-description">
-            <h1 style={{ fontSize: "2.6em" }}>
-              Hey there, <span>I'm Soham Patel!</span>
+            <h1 style={{ fontSize: "2.6em", marginTop: "6rem" }}>
+               <span>Introducing Myself!</span>
             </h1>
             <p className="home-about-body">
-              I’m a Phoenix-based innovator who fell in love with programming early on ❤️. My journey has taken me from mastering classics like{" "}
-              <b className="purple">Python</b>,{" "}
-              <b className="purple">JavaScript</b>, and{" "}
-              <b className="purple">Java</b> to building robust web solutions and exploring the fascinating world of{" "}
-              <b className="purple">AI</b> 🚀.
+            Hello, I’m Soham Patel—an enthusiastic Phoenix-based tech explorer with a lifelong passion for all things code. My earliest sparks of curiosity led me to master {" "}
+              <b>Python</b>,{" "}
+              <b>JavaScript</b>, and{" "}
+              <b>Java</b>  opening the door to building dynamic web solutions and diving into the thrilling realm of{" "}
+              <b>AI</b> 🚀.
               <br />
               <br />
               {showMore && (
                 <>
-                  Currently, I’m pursuing my Master’s in Information Technology at Arizona State University, where I blend traditional programming with modern tools such as{" "}
-                  <b className="purple">Node.js</b>,{" "}
-                  <b className="purple">React.js</b>, and{" "}
-                  <b className="purple">Next.js</b> to create scalable, secure digital experiences.
+                  Right now, I’m pursuing my Master’s in Information Technology at Arizona State University, blending timeless programming concepts with cutting-edge tools like{" "}
+                  <b>Node.js</b>,{" "}
+                  <b>React.js</b>, and{" "}
+                  <b>Next.js</b> to craft secure, scalable digital experiences.
                   <br />
                   <br />
-                  My hands-on experience spans roles as a Software Engineer Intern, Cyber-Security Intern, and Data Management Assistant—optimizing AI systems, securing data pipelines, and streamlining complex ETL processes. From architecting a high-availability hospital management system to crafting a secure e-commerce platform, every project fuels my passion for innovative tech.
+                  Along my journey, I’ve worn multiple hats: Software Engineer Intern, Cyber-Security Intern, and Data Management Assistant. These roles let me optimize AI systems, safeguard data pipelines, and streamline complex ETL processes—whether I’m engineering high-availability hospital management systems or building secure e-commerce platforms. Each project fuels my excitement for innovative tech.
                   <br />
                   <br />
                 </>
@@ -57,51 +61,19 @@ function Home2() {
               {showMore ? "Show Less" : "Read More"}
             </button>
           </Col>
-          <Col md={4} className="myAvtar">
-            <img src={myImg} className="img-fluid" alt="avatar" />
-          </Col>
+          <Col 
+  md={4} 
+  className="myAvtar" 
+  style={{ marginTop: "6rem" }}
+>
+  <img src={myImg} className="img-fluid" alt="avatar" />
+</Col>
+
         </Row>
-        <Row>
-          <Col md={12} className="home-about-social">
-            <h1>FIND ME ON</h1>
-            <p>
-              Feel free to <span className="purple">connect</span> with me
-            </p>
-            <ul className="home-about-social-links">
-              <li className="social-icons">
-                <a
-                  href="https://github.com/Sohamp2809"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="icon-colour home-social-icons"
-                >
-                  <AiFillGithub />
-                </a>
-              </li>
-              <li className="social-icons">
-                <a
-                  href="mailto:psoham028@gmail.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="icon-colour home-social-icons"
-                >
-                  <AiOutlineMail />
-                </a>
-              </li>
-              <li className="social-icons">
-                <a
-                  href="https://www.linkedin.com/in/soham-patel-381243201/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="icon-colour home-social-icons"
-                >
-                  <FaLinkedinIn />
-                </a>
-              </li>
-            </ul>
-          </Col>
-        </Row>
+        
       </Container>
+    {/* Render Home3 right after Home2 content */}
+    <Home3 />
     </Container>
   );
 }

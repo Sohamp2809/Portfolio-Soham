@@ -385,14 +385,23 @@ button:focus {
   padding-left: 0;
   display: flex;
   justify-content: center;
+  position: relative;
   gap: 25px;
+  z-index: 1000;           /* higher than the canvas */
+  pointer-events: auto;
 }
 
 .home-about-social-links .social-icons a {
   font-size: 1.9rem;
   color: #1a1a1a;
   transition: 0.3s;
+  cursor: pointer;
+  pointer-events: inherit;
 }
+.home-about-social-links .social-icons a *{
+  cursor: pointer !important;
+}
+
 
 .home-about-social-links .social-icons a:hover {
   color: #3474e0;
